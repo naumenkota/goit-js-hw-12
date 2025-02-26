@@ -51,7 +51,6 @@ img {
 
 .image-card {
     flex: 0 0 calc(20% - 10px);
-    /* 20% для 5 карток в ряд */
     box-sizing: border-box;
     border-bottom: 1px solid #808080;
     border-left: 1px solid #808080;
