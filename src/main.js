@@ -53,34 +53,33 @@ form.addEventListener('submit', async e => {
 
 loadButton.addEventListener('click', async e => {
     try {
-        page++;
-        const query = searchInput.value.trim();
-        const { hits, totalHits } = await fetchImages(query, page, limit);;
-        totalPages = Math.ceil(totalHits / limit);
-         if (page > totalPages) {
-            loadButton.style.display = 'none'; 
+      const query = searchInput.value.trim();
+            page++;
+       const { hits, totalHits } = await fetchImages(query, page, limit);
+      totalPages = Math.ceil(totalHits / limit);
+      renderImages(hits);
+         if (page >= totalPages || hits.length === 0) {
+            loadButton.style.display = 'none';
             iziToast.info({
                 title: 'No more results',
                 message: 'You have reached the last page of results.',
             });
              return;
-        }
-        renderImages(hits);
+      }
 
-       
         const firstImageCard = document.querySelector('.image-card');
         let cardHeight = 0;
-if (firstImageCard) {
-  cardHeight = firstImageCard.getBoundingClientRect().height;
-}
-
-
+           if (firstImageCard) {
+                 cardHeight = firstImageCard.getBoundingClientRect().height;
+                }
         if (cardHeight > 0) {
             window.scrollBy({
                 top: cardHeight * 2,  
                 behavior: 'smooth',    
             });
         }
+
+      loadButton.style.display = 'block';
 
     } catch (error) {
         console.error('Error fetching images:', error);

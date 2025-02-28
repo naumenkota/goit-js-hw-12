@@ -7,6 +7,7 @@ export function clearGallery() {
     const gallery = document.querySelector('.gallery');
     gallery.innerHTML = '';
 };
+const lightbox = new SimpleLightbox('.gallery a');
 
 export function renderImages(images) {
     const gallery = document.querySelector('.gallery');
@@ -37,6 +38,6 @@ export function renderImages(images) {
         gallery.appendChild(imageCard);
     });
 
-    const lightbox = new SimpleLightbox('.gallery a');
+    
     lightbox.refresh();
 }
