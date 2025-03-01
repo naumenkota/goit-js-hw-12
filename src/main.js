@@ -33,9 +33,14 @@ form.addEventListener('submit', async e => {
         iziToast.error({
           title: 'Error',
           message: 'Sorry, there are no images matching your search query. Please try again!'
-        }); } else {
+        });
+      } else {
           renderImages(hits);
-          loadButton.style.display = 'block';
+          if (hits.length < limit) {
+                loadButton.style.display = 'none';
+            } else {
+                loadButton.style.display = 'block';
+            }
       }
     }
     catch(error) {
@@ -58,6 +63,7 @@ loadButton.addEventListener('click', async e => {
        const { hits, totalHits } = await fetchImages(query, page, limit);
       totalPages = Math.ceil(totalHits / limit);
       renderImages(hits);
+      window.scrollBy({ top: window.innerHeight * 2, behavior: 'smooth' });
          if (page >= totalPages || hits.length === 0) {
             loadButton.style.display = 'none';
             iziToast.info({
@@ -66,19 +72,8 @@ loadButton.addEventListener('click', async e => {
             });
              return;
       }
-
-        const firstImageCard = document.querySelector('.image-card');
-        let cardHeight = 0;
-           if (firstImageCard) {
-                 cardHeight = firstImageCard.getBoundingClientRect().height;
-                }
-        if (cardHeight > 0) {
-            window.scrollBy({
-                top: cardHeight * 2,  
-                behavior: 'smooth',    
-            });
-        }
-
+      
+      
       loadButton.style.display = 'block';
 
     } catch (error) {
